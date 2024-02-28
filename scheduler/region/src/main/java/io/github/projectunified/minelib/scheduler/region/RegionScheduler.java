@@ -8,6 +8,7 @@ import io.github.projectunified.minelib.scheduler.common.util.supplier.ObjectSup
 import io.github.projectunified.minelib.scheduler.common.util.supplier.ObjectSupplierList;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 
 import java.util.function.BooleanSupplier;
 
@@ -17,6 +18,10 @@ public interface RegionScheduler {
             ObjectSupplier.of(PlatformChecker::isFolia, FoliaRegionScheduler::new),
             ObjectSupplier.of(BukkitRegionScheduler::new)
     );
+
+    static RegionScheduler get(Plugin plugin) {
+        return SUPPLIERS.get(plugin);
+    }
 
     Task run(World world, int chunkX, int chunkZ, Runnable runnable);
 
