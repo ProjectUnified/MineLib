@@ -1,6 +1,6 @@
-package io.github.projectunified.scheduler.common.task.wrapper;
+package io.github.projectunified.minelib.scheduler.common.task.wrapper;
 
-import io.github.projectunified.scheduler.common.task.Task;
+import io.github.projectunified.minelib.scheduler.common.task.Task;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;

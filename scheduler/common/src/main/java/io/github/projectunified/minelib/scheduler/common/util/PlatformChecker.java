@@ -1,4 +1,4 @@
-package io.github.projectunified.scheduler.common.util;
+package io.github.projectunified.minelib.scheduler.common.util;
 
 public class PlatformChecker {
     public static final boolean IS_PAPER;

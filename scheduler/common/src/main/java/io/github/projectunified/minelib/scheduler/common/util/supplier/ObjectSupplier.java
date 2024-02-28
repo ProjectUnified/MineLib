@@ -1,4 +1,4 @@
-package io.github.projectunified.scheduler.common.util.supplier;
+package io.github.projectunified.minelib.scheduler.common.util.supplier;
 
 import org.bukkit.plugin.Plugin;
 

@@ -1,4 +1,4 @@
-package io.github.projectunified.scheduler.common.time;
+package io.github.projectunified.minelib.scheduler.common.time;
 
 import java.util.concurrent.TimeUnit;
 

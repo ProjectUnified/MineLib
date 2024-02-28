@@ -1,4 +1,4 @@
-package io.github.projectunified.scheduler.common.util.runnable;
+package io.github.projectunified.minelib.scheduler.common.util.runnable;
 
 import java.util.function.BooleanSupplier;
 

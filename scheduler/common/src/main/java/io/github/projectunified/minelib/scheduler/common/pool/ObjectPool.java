@@ -1,4 +1,4 @@
-package io.github.projectunified.scheduler.common.pool;
+package io.github.projectunified.minelib.scheduler.common.pool;
 
 import org.bukkit.plugin.Plugin;
 
