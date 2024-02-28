@@ -13,11 +13,12 @@
     <packaging>pom</packaging>
     <modules>
         <module>common</module>
-        <module>global</module>
         <module>canceller</module>
+        <module>global</module>
         <module>async</module>
         <module>entity</module>
         <module>region</module>
+        <module>bundle</module>
     </modules>
 
     <repositories>
