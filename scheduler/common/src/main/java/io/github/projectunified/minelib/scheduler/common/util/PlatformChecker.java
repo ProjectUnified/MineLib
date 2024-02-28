@@ -1,8 +1,8 @@
 package io.github.projectunified.minelib.scheduler.common.util;
 
 public class PlatformChecker {
-    public static final boolean IS_PAPER;
-    public static final boolean IS_FOLIA;
+    private static final boolean IS_PAPER;
+    private static final boolean IS_FOLIA;
 
     static {
         boolean paper;
@@ -22,5 +22,13 @@ public class PlatformChecker {
             folia = false;
         }
         IS_FOLIA = folia;
+    }
+
+    public static boolean isPaper() {
+        return IS_PAPER;
+    }
+
+    public static boolean isFolia() {
+        return IS_FOLIA;
     }
 }

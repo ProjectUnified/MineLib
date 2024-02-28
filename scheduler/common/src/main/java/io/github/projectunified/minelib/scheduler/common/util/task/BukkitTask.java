@@ -3,6 +3,9 @@ package io.github.projectunified.minelib.scheduler.common.util.task;
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.function.BooleanSupplier;
 
 public class BukkitTask implements Task {
     private final org.bukkit.scheduler.BukkitTask bukkitTask;
@@ -11,6 +14,17 @@ public class BukkitTask implements Task {
     public BukkitTask(org.bukkit.scheduler.BukkitTask bukkitTask, boolean repeating) {
         this.bukkitTask = bukkitTask;
         this.repeating = repeating;
+    }
+
+    public static BukkitRunnable wrapRunnable(BooleanSupplier runnable) {
+        return new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!runnable.getAsBoolean()) {
+                    cancel();
+                }
+            }
+        };
     }
 
     public org.bukkit.scheduler.BukkitTask getBukkitTask() {

@@ -1,4 +1,4 @@
-package io.github.projectunified.minelib.scheduler.global;
+package io.github.projectunified.minelib.scheduler.async;
 
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
@@ -10,14 +10,14 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.function.BooleanSupplier;
 
-public interface GlobalScheduler {
-    ObjectSupplierList<GlobalScheduler> SUPPLIERS = new ObjectSupplierList<>(
-            GlobalScheduler.class,
-            ObjectSupplier.of(PlatformChecker::isFolia, FoliaGlobalScheduler::new),
-            ObjectSupplier.of(BukkitGlobalScheduler::new)
+public interface AsyncScheduler {
+    ObjectSupplierList<AsyncScheduler> SUPPLIERS = new ObjectSupplierList<>(
+            AsyncScheduler.class,
+            ObjectSupplier.of(PlatformChecker::isFolia, FoliaAsyncScheduler::new),
+            ObjectSupplier.of(BukkitAsyncScheduler::new)
     );
 
-    static GlobalScheduler get(Plugin plugin) {
+    static AsyncScheduler get(Plugin plugin) {
         return SUPPLIERS.get(plugin);
     }
 
