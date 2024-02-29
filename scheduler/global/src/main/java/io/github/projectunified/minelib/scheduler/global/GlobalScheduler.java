@@ -1,24 +1,22 @@
 package io.github.projectunified.minelib.scheduler.global;
 
+import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
 import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
 import io.github.projectunified.minelib.scheduler.common.util.PlatformChecker;
-import io.github.projectunified.minelib.scheduler.common.util.supplier.ObjectSupplier;
-import io.github.projectunified.minelib.scheduler.common.util.supplier.ObjectSupplierList;
 import org.bukkit.plugin.Plugin;
 
 import java.util.function.BooleanSupplier;
 
 public interface GlobalScheduler {
-    ObjectSupplierList<GlobalScheduler> SUPPLIERS = new ObjectSupplierList<>(
-            GlobalScheduler.class,
-            ObjectSupplier.of(PlatformChecker::isFolia, FoliaGlobalScheduler::new),
-            ObjectSupplier.of(BukkitGlobalScheduler::new)
+    ObjectProvider<GlobalScheduler> PROVIDER = new ObjectProvider<>(
+            ObjectProvider.entry(PlatformChecker::isFolia, FoliaGlobalScheduler::new),
+            ObjectProvider.entry(BukkitGlobalScheduler::new)
     );
 
     static GlobalScheduler get(Plugin plugin) {
-        return SUPPLIERS.get(plugin);
+        return PROVIDER.get(plugin);
     }
 
     Task run(Runnable runnable);

@@ -1,11 +1,10 @@
 package io.github.projectunified.minelib.scheduler.region;
 
+import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
 import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
 import io.github.projectunified.minelib.scheduler.common.util.PlatformChecker;
-import io.github.projectunified.minelib.scheduler.common.util.supplier.ObjectSupplier;
-import io.github.projectunified.minelib.scheduler.common.util.supplier.ObjectSupplierList;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -13,14 +12,13 @@ import org.bukkit.plugin.Plugin;
 import java.util.function.BooleanSupplier;
 
 public interface RegionScheduler {
-    ObjectSupplierList<RegionScheduler> SUPPLIERS = new ObjectSupplierList<>(
-            RegionScheduler.class,
-            ObjectSupplier.of(PlatformChecker::isFolia, FoliaRegionScheduler::new),
-            ObjectSupplier.of(BukkitRegionScheduler::new)
+    ObjectProvider<RegionScheduler> PROVIDER = new ObjectProvider<>(
+            ObjectProvider.entry(PlatformChecker::isFolia, FoliaRegionScheduler::new),
+            ObjectProvider.entry(BukkitRegionScheduler::new)
     );
 
     static RegionScheduler get(Plugin plugin) {
-        return SUPPLIERS.get(plugin);
+        return PROVIDER.get(plugin);
     }
 
     Task run(World world, int chunkX, int chunkZ, Runnable runnable);
