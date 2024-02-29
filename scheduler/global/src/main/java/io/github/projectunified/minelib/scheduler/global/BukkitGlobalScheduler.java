@@ -19,24 +19,21 @@ class BukkitGlobalScheduler implements GlobalScheduler {
     @Override
     public Task run(Runnable runnable) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTask(plugin, runnable),
-                false
+                Bukkit.getScheduler().runTask(plugin, runnable)
         );
     }
 
     @Override
     public Task runLater(Runnable runnable, TaskTime delay) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTaskLater(plugin, runnable, delay.getTicks()),
-                false
+                Bukkit.getScheduler().runTaskLater(plugin, runnable, delay.getTicks())
         );
     }
 
     @Override
     public Task runTimer(BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
         return new BukkitTask(
-                BukkitTask.wrapRunnable(runnable).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks()),
-                true
+                BukkitTask.wrapRunnable(runnable).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks())
         );
     }
 }

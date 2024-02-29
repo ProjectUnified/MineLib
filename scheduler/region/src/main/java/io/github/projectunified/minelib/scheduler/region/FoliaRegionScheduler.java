@@ -21,48 +21,42 @@ class FoliaRegionScheduler implements RegionScheduler {
     @Override
     public Task run(World world, int chunkX, int chunkZ, Runnable runnable) {
         return new FoliaTask(
-                Bukkit.getRegionScheduler().run(plugin, world, chunkX, chunkZ, FoliaTask.wrapRunnable(runnable)),
-                false
+                Bukkit.getRegionScheduler().run(plugin, world, chunkX, chunkZ, FoliaTask.wrapRunnable(runnable))
         );
     }
 
     @Override
     public Task runLater(World world, int chunkX, int chunkZ, Runnable runnable, TaskTime delay) {
         return new FoliaTask(
-                Bukkit.getRegionScheduler().runDelayed(plugin, world, chunkX, chunkZ, FoliaTask.wrapRunnable(runnable), delay.getNormalizedTicks()),
-                false
+                Bukkit.getRegionScheduler().runDelayed(plugin, world, chunkX, chunkZ, FoliaTask.wrapRunnable(runnable), delay.getNormalizedTicks())
         );
     }
 
     @Override
     public Task runTimer(World world, int chunkX, int chunkZ, BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
         return new FoliaTask(
-                Bukkit.getRegionScheduler().runAtFixedRate(plugin, world, chunkX, chunkZ, FoliaTask.wrapRunnable(runnable), timerTaskTime.getNormalizedDelayTicks(), timerTaskTime.getNormalizedPeriodTicks()),
-                false
+                Bukkit.getRegionScheduler().runAtFixedRate(plugin, world, chunkX, chunkZ, FoliaTask.wrapRunnable(runnable), timerTaskTime.getNormalizedDelayTicks(), timerTaskTime.getNormalizedPeriodTicks())
         );
     }
 
     @Override
     public Task run(Location location, Runnable runnable) {
         return new FoliaTask(
-                Bukkit.getRegionScheduler().run(plugin, location, FoliaTask.wrapRunnable(runnable)),
-                false
+                Bukkit.getRegionScheduler().run(plugin, location, FoliaTask.wrapRunnable(runnable))
         );
     }
 
     @Override
     public Task runLater(Location location, Runnable runnable, TaskTime delay) {
         return new FoliaTask(
-                Bukkit.getRegionScheduler().runDelayed(plugin, location, FoliaTask.wrapRunnable(runnable), delay.getNormalizedTicks()),
-                false
+                Bukkit.getRegionScheduler().runDelayed(plugin, location, FoliaTask.wrapRunnable(runnable), delay.getNormalizedTicks())
         );
     }
 
     @Override
     public Task runTimer(Location location, BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
         return new FoliaTask(
-                Bukkit.getRegionScheduler().runAtFixedRate(plugin, location, FoliaTask.wrapRunnable(runnable), timerTaskTime.getNormalizedDelayTicks(), timerTaskTime.getNormalizedPeriodTicks()),
-                false
+                Bukkit.getRegionScheduler().runAtFixedRate(plugin, location, FoliaTask.wrapRunnable(runnable), timerTaskTime.getNormalizedDelayTicks(), timerTaskTime.getNormalizedPeriodTicks())
         );
     }
 }

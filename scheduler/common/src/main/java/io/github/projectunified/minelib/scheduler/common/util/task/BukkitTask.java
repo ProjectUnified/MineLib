@@ -9,11 +9,9 @@ import java.util.function.BooleanSupplier;
 
 public class BukkitTask implements Task {
     private final org.bukkit.scheduler.BukkitTask bukkitTask;
-    private final boolean repeating;
 
-    public BukkitTask(org.bukkit.scheduler.BukkitTask bukkitTask, boolean repeating) {
+    public BukkitTask(org.bukkit.scheduler.BukkitTask bukkitTask) {
         this.bukkitTask = bukkitTask;
-        this.repeating = repeating;
     }
 
     public static BukkitRunnable wrapRunnable(BooleanSupplier runnable) {
@@ -44,16 +42,6 @@ public class BukkitTask implements Task {
     @Override
     public void cancel() {
         bukkitTask.cancel();
-    }
-
-    @Override
-    public boolean isAsync() {
-        return !bukkitTask.isSync();
-    }
-
-    @Override
-    public boolean isRepeating() {
-        return repeating;
     }
 
     @Override

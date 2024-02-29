@@ -21,48 +21,42 @@ class BukkitRegionScheduler implements RegionScheduler {
     @Override
     public Task run(World world, int chunkX, int chunkZ, Runnable runnable) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTask(plugin, runnable),
-                false
+                Bukkit.getScheduler().runTask(plugin, runnable)
         );
     }
 
     @Override
     public Task runLater(World world, int chunkX, int chunkZ, Runnable runnable, TaskTime delay) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTaskLater(plugin, runnable, delay.getTicks()),
-                false
+                Bukkit.getScheduler().runTaskLater(plugin, runnable, delay.getTicks())
         );
     }
 
     @Override
     public Task runTimer(World world, int chunkX, int chunkZ, BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
         return new BukkitTask(
-                BukkitTask.wrapRunnable(runnable).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks()),
-                true
+                BukkitTask.wrapRunnable(runnable).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks())
         );
     }
 
     @Override
     public Task run(Location location, Runnable runnable) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTask(plugin, runnable),
-                false
+                Bukkit.getScheduler().runTask(plugin, runnable)
         );
     }
 
     @Override
     public Task runLater(Location location, Runnable runnable, TaskTime delay) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTaskLater(plugin, runnable, delay.getTicks()),
-                false
+                Bukkit.getScheduler().runTaskLater(plugin, runnable, delay.getTicks())
         );
     }
 
     @Override
     public Task runTimer(Location location, BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
         return new BukkitTask(
-                BukkitTask.wrapRunnable(runnable).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks()),
-                true
+                BukkitTask.wrapRunnable(runnable).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks())
         );
     }
 }

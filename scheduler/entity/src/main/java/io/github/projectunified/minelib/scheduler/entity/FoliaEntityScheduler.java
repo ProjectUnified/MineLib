@@ -26,7 +26,7 @@ class FoliaEntityScheduler implements EntityScheduler {
         } else {
             scheduledTask = Bukkit.getGlobalRegionScheduler().run(plugin, FoliaTask.wrapRunnable(retired));
         }
-        return new FoliaTask(scheduledTask, false);
+        return new FoliaTask(scheduledTask);
     }
 
     @Override
@@ -37,7 +37,7 @@ class FoliaEntityScheduler implements EntityScheduler {
         } else {
             scheduledTask = Bukkit.getGlobalRegionScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(retired), delay.getNormalizedTicks());
         }
-        return new FoliaTask(scheduledTask, false);
+        return new FoliaTask(scheduledTask);
     }
 
     @Override
@@ -48,6 +48,6 @@ class FoliaEntityScheduler implements EntityScheduler {
         } else {
             scheduledTask = Bukkit.getGlobalRegionScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(retired), timerTaskTime.getNormalizedDelayTicks());
         }
-        return new FoliaTask(scheduledTask, false);
+        return new FoliaTask(scheduledTask);
     }
 }

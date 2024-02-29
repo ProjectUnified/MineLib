@@ -43,24 +43,21 @@ class BukkitEntityScheduler implements EntityScheduler {
     @Override
     public Task run(Entity entity, Runnable runnable, Runnable retired) {
         return new BukkitTask(
-                wrapRunnable(entity, runnable, retired).runTask(plugin),
-                false
+                wrapRunnable(entity, runnable, retired).runTask(plugin)
         );
     }
 
     @Override
     public Task runLater(Entity entity, Runnable runnable, Runnable retired, TaskTime delay) {
         return new BukkitTask(
-                wrapRunnable(entity, runnable, retired).runTaskLater(plugin, delay.getTicks()),
-                false
+                wrapRunnable(entity, runnable, retired).runTaskLater(plugin, delay.getTicks())
         );
     }
 
     @Override
     public Task runTimer(Entity entity, BooleanSupplier runnable, Runnable retired, TimerTaskTime timerTaskTime) {
         return new BukkitTask(
-                wrapRunnable(entity, runnable, retired).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks()),
-                true
+                wrapRunnable(entity, runnable, retired).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks())
         );
     }
 }

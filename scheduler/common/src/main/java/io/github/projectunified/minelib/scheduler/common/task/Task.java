@@ -16,20 +16,6 @@ public interface Task {
     void cancel();
 
     /**
-     * Check if the task is async
-     *
-     * @return true if the task is async
-     */
-    boolean isAsync();
-
-    /**
-     * Check if the task is repeating
-     *
-     * @return true if the task is repeating
-     */
-    boolean isRepeating();
-
-    /**
      * Get the plugin that owns the task
      *
      * @return the plugin

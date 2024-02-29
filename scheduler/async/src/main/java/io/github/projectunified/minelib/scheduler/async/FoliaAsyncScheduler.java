@@ -19,24 +19,21 @@ class FoliaAsyncScheduler implements AsyncScheduler {
     @Override
     public Task run(Runnable runnable) {
         return new FoliaTask(
-                Bukkit.getAsyncScheduler().runNow(plugin, FoliaTask.wrapRunnable(runnable)),
-                true
+                Bukkit.getAsyncScheduler().runNow(plugin, FoliaTask.wrapRunnable(runnable))
         );
     }
 
     @Override
     public Task runLater(Runnable runnable, TaskTime delay) {
         return new FoliaTask(
-                Bukkit.getAsyncScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(runnable), delay.getTime(), delay.getUnit()),
-                true
+                Bukkit.getAsyncScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(runnable), delay.getTime(), delay.getUnit())
         );
     }
 
     @Override
     public Task runTimer(BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
         return new FoliaTask(
-                Bukkit.getAsyncScheduler().runAtFixedRate(plugin, FoliaTask.wrapRunnable(runnable), timerTaskTime.getNormalizedDelay(), timerTaskTime.getNormalizedPeriod(), timerTaskTime.getUnit()),
-                true
+                Bukkit.getAsyncScheduler().runAtFixedRate(plugin, FoliaTask.wrapRunnable(runnable), timerTaskTime.getNormalizedDelay(), timerTaskTime.getNormalizedPeriod(), timerTaskTime.getUnit())
         );
     }
 }

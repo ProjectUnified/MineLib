@@ -9,11 +9,9 @@ import java.util.function.Consumer;
 
 public class FoliaTask implements Task {
     private final ScheduledTask scheduledTask;
-    private final boolean async;
 
-    public FoliaTask(ScheduledTask scheduledTask, boolean async) {
+    public FoliaTask(ScheduledTask scheduledTask) {
         this.scheduledTask = scheduledTask;
-        this.async = async;
     }
 
     public static Consumer<ScheduledTask> wrapRunnable(BooleanSupplier runnable) {
@@ -40,16 +38,6 @@ public class FoliaTask implements Task {
     @Override
     public void cancel() {
         scheduledTask.cancel();
-    }
-
-    @Override
-    public boolean isAsync() {
-        return async;
-    }
-
-    @Override
-    public boolean isRepeating() {
-        return scheduledTask.isRepeatingTask();
     }
 
     @Override

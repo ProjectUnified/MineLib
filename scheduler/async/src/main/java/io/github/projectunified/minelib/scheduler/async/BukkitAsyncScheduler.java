@@ -19,24 +19,21 @@ class BukkitAsyncScheduler implements AsyncScheduler {
     @Override
     public Task run(Runnable runnable) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable),
-                false
+                Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable)
         );
     }
 
     @Override
     public Task runLater(Runnable runnable, TaskTime delay) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, runnable, delay.getTicks()),
-                false
+                Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, runnable, delay.getTicks())
         );
     }
 
     @Override
     public Task runTimer(BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
         return new BukkitTask(
-                BukkitTask.wrapRunnable(runnable).runTaskTimerAsynchronously(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks()),
-                true
+                BukkitTask.wrapRunnable(runnable).runTaskTimerAsynchronously(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks())
         );
     }
 }

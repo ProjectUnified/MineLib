@@ -19,24 +19,21 @@ class FoliaGlobalScheduler implements GlobalScheduler {
     @Override
     public Task run(Runnable runnable) {
         return new FoliaTask(
-                Bukkit.getGlobalRegionScheduler().run(plugin, FoliaTask.wrapRunnable(runnable)),
-                false
+                Bukkit.getGlobalRegionScheduler().run(plugin, FoliaTask.wrapRunnable(runnable))
         );
     }
 
     @Override
     public Task runLater(Runnable runnable, TaskTime delay) {
         return new FoliaTask(
-                Bukkit.getGlobalRegionScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(runnable), delay.getNormalizedTicks()),
-                false
+                Bukkit.getGlobalRegionScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(runnable), delay.getNormalizedTicks())
         );
     }
 
     @Override
     public Task runTimer(BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
         return new FoliaTask(
-                Bukkit.getGlobalRegionScheduler().runAtFixedRate(plugin, FoliaTask.wrapRunnable(runnable), timerTaskTime.getNormalizedDelayTicks(), timerTaskTime.getNormalizedPeriodTicks()),
-                true
+                Bukkit.getGlobalRegionScheduler().runAtFixedRate(plugin, FoliaTask.wrapRunnable(runnable), timerTaskTime.getNormalizedDelayTicks(), timerTaskTime.getNormalizedPeriodTicks())
         );
     }
 }
