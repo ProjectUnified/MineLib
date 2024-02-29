@@ -4,7 +4,7 @@ import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
 import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
-import io.github.projectunified.minelib.scheduler.common.util.PlatformChecker;
+import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -13,7 +13,7 @@ import java.util.function.BooleanSupplier;
 
 public interface EntityScheduler {
     ObjectProvider<EntityScheduler> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(PlatformChecker::isFolia, FoliaEntityScheduler::new),
+            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaEntityScheduler::new),
             ObjectProvider.entry(BukkitEntityScheduler::new)
     );
 

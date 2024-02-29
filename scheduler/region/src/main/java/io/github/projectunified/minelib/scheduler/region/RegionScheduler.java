@@ -4,7 +4,7 @@ import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
 import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
-import io.github.projectunified.minelib.scheduler.common.util.PlatformChecker;
+import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -13,7 +13,7 @@ import java.util.function.BooleanSupplier;
 
 public interface RegionScheduler {
     ObjectProvider<RegionScheduler> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(PlatformChecker::isFolia, FoliaRegionScheduler::new),
+            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaRegionScheduler::new),
             ObjectProvider.entry(BukkitRegionScheduler::new)
     );
 

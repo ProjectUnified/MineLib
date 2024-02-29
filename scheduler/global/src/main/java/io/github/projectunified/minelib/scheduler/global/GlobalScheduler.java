@@ -4,14 +4,14 @@ import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
 import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
-import io.github.projectunified.minelib.scheduler.common.util.PlatformChecker;
+import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.plugin.Plugin;
 
 import java.util.function.BooleanSupplier;
 
 public interface GlobalScheduler {
     ObjectProvider<GlobalScheduler> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(PlatformChecker::isFolia, FoliaGlobalScheduler::new),
+            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaGlobalScheduler::new),
             ObjectProvider.entry(BukkitGlobalScheduler::new)
     );
 
