@@ -3,23 +3,9 @@ package io.github.projectunified.minelib.scheduler.common.util;
 import java.util.function.BooleanSupplier;
 
 public enum Platform {
-    FOLIA(() -> {
-        try {
-            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
-    }),
-    PAPER(() -> {
-        try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
-    }),
-    BUKKIT(() -> true);
+    FOLIA("io.papermc.paper.threadedregions.RegionizedServer"),
+    PAPER("com.destroystokyo.paper.PaperConfig"),
+    BUKKIT(() -> true); // Default platform
 
     public static final Platform CURRENT;
 
@@ -41,6 +27,17 @@ public enum Platform {
 
     Platform(BooleanSupplier isPlatformCheck) {
         this.isPlatform = isPlatformCheck.getAsBoolean();
+    }
+
+    Platform(String className) {
+        this(() -> {
+            try {
+                Class.forName(className);
+                return true;
+            } catch (ClassNotFoundException e) {
+                return false;
+            }
+        });
     }
 
     public boolean isPlatform() {
