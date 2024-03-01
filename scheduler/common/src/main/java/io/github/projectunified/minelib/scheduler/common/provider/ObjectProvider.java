@@ -24,10 +24,6 @@ public class ObjectProvider<T> {
                 }
             });
 
-    public ObjectProvider(Function<Plugin, T> function) {
-        this.function = function;
-    }
-
     @SafeVarargs
     public ObjectProvider(Map.Entry<BooleanSupplier, Function<Plugin, T>>... entries) {
         Function<Plugin, T> function = null;
