@@ -6,47 +6,45 @@ import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
 import io.github.projectunified.minelib.scheduler.common.util.task.FoliaTask;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.plugin.Plugin;
 
 import java.util.function.BooleanSupplier;
 
 class FoliaEntityScheduler implements EntityScheduler {
-    private final Plugin plugin;
+    private final Key key;
 
-    FoliaEntityScheduler(Plugin plugin) {
-        this.plugin = plugin;
+    FoliaEntityScheduler(Key key) {
+        this.key = key;
     }
 
     @Override
-    public Task run(Entity entity, Runnable runnable, Runnable retired) {
+    public Task run(Runnable runnable, Runnable retired) {
         ScheduledTask scheduledTask;
-        if (isEntityValid(entity)) {
-            scheduledTask = entity.getScheduler().run(plugin, FoliaTask.wrapRunnable(runnable), retired);
+        if (key.isEntityValid()) {
+            scheduledTask = key.entity.getScheduler().run(key.plugin, FoliaTask.wrapRunnable(runnable), retired);
         } else {
-            scheduledTask = Bukkit.getGlobalRegionScheduler().run(plugin, FoliaTask.wrapRunnable(retired));
+            scheduledTask = Bukkit.getGlobalRegionScheduler().run(key.plugin, FoliaTask.wrapRunnable(retired));
         }
         return new FoliaTask(scheduledTask);
     }
 
     @Override
-    public Task runLater(Entity entity, Runnable runnable, Runnable retired, TaskTime delay) {
+    public Task runLater(Runnable runnable, Runnable retired, TaskTime delay) {
         ScheduledTask scheduledTask;
-        if (isEntityValid(entity)) {
-            scheduledTask = entity.getScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(runnable), retired, delay.getNormalizedTicks());
+        if (key.isEntityValid()) {
+            scheduledTask = key.entity.getScheduler().runDelayed(key.plugin, FoliaTask.wrapRunnable(runnable), retired, delay.getNormalizedTicks());
         } else {
-            scheduledTask = Bukkit.getGlobalRegionScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(retired), delay.getNormalizedTicks());
+            scheduledTask = Bukkit.getGlobalRegionScheduler().runDelayed(key.plugin, FoliaTask.wrapRunnable(retired), delay.getNormalizedTicks());
         }
         return new FoliaTask(scheduledTask);
     }
 
     @Override
-    public Task runTimer(Entity entity, BooleanSupplier runnable, Runnable retired, TimerTaskTime timerTaskTime) {
+    public Task runTimer(BooleanSupplier runnable, Runnable retired, TimerTaskTime timerTaskTime) {
         ScheduledTask scheduledTask;
-        if (isEntityValid(entity)) {
-            scheduledTask = entity.getScheduler().runAtFixedRate(plugin, FoliaTask.wrapRunnable(runnable), retired, timerTaskTime.getNormalizedDelayTicks(), timerTaskTime.getNormalizedPeriodTicks());
+        if (key.isEntityValid()) {
+            scheduledTask = key.entity.getScheduler().runAtFixedRate(key.plugin, FoliaTask.wrapRunnable(runnable), retired, timerTaskTime.getNormalizedDelayTicks(), timerTaskTime.getNormalizedPeriodTicks());
         } else {
-            scheduledTask = Bukkit.getGlobalRegionScheduler().runDelayed(plugin, FoliaTask.wrapRunnable(retired), timerTaskTime.getNormalizedDelayTicks());
+            scheduledTask = Bukkit.getGlobalRegionScheduler().runDelayed(key.plugin, FoliaTask.wrapRunnable(retired), timerTaskTime.getNormalizedDelayTicks());
         }
         return new FoliaTask(scheduledTask);
     }
