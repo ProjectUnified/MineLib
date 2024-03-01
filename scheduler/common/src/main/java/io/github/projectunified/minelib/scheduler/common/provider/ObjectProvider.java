@@ -15,7 +15,6 @@ public class ObjectProvider<K, T> {
     private final Function<K, T> function;
     private final LoadingCache<K, T> cache = CacheBuilder.newBuilder()
             .weakKeys()
-            .initialCapacity(20)
             .build(new CacheLoader<K, T>() {
                 @Override
                 public @NotNull T load(@NotNull K key) {
