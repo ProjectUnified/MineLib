@@ -138,7 +138,6 @@
                             <publishingServerId>central</publishingServerId>
                             <tokenAuth>true</tokenAuth>
                             <autoPublish>true</autoPublish>
-                            <waitUntil>uploaded</waitUntil>
                             <deploymentName>MineLib</deploymentName>
                         </configuration>
                     </plugin>
