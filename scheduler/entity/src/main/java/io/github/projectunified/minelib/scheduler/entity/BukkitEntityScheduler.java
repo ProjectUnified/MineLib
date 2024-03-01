@@ -1,8 +1,6 @@
 package io.github.projectunified.minelib.scheduler.entity;
 
 import io.github.projectunified.minelib.scheduler.common.task.Task;
-import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
-import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
 import io.github.projectunified.minelib.scheduler.common.util.task.BukkitTask;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -46,16 +44,16 @@ class BukkitEntityScheduler implements EntityScheduler {
     }
 
     @Override
-    public Task runLater(Runnable runnable, Runnable retired, TaskTime delay) {
+    public Task runLater(Runnable runnable, Runnable retired, long delay) {
         return new BukkitTask(
-                wrapRunnable(runnable, retired).runTaskLater(key.plugin, delay.getTicks())
+                wrapRunnable(runnable, retired).runTaskLater(key.plugin, delay)
         );
     }
 
     @Override
-    public Task runTimer(BooleanSupplier runnable, Runnable retired, TimerTaskTime timerTaskTime) {
+    public Task runTimer(BooleanSupplier runnable, Runnable retired, long delay, long period) {
         return new BukkitTask(
-                wrapRunnable(runnable, retired).runTaskTimer(key.plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks())
+                wrapRunnable(runnable, retired).runTaskTimer(key.plugin, delay, period)
         );
     }
 }

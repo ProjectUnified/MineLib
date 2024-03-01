@@ -26,6 +26,10 @@ public class FoliaTask implements Task {
         return task -> runnable.run();
     }
 
+    public static long normalizedTicks(long ticks) {
+        return Math.max(1, ticks);
+    }
+
     public ScheduledTask getScheduledTask() {
         return scheduledTask;
     }

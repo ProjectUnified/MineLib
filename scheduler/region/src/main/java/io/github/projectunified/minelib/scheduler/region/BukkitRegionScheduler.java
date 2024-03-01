@@ -1,8 +1,6 @@
 package io.github.projectunified.minelib.scheduler.region;
 
 import io.github.projectunified.minelib.scheduler.common.task.Task;
-import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
-import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
 import io.github.projectunified.minelib.scheduler.common.util.task.BukkitTask;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -24,16 +22,16 @@ class BukkitRegionScheduler implements RegionScheduler {
     }
 
     @Override
-    public Task runLater(Runnable runnable, TaskTime delay) {
+    public Task runLater(Runnable runnable, long delay) {
         return new BukkitTask(
-                Bukkit.getScheduler().runTaskLater(plugin, runnable, delay.getTicks())
+                Bukkit.getScheduler().runTaskLater(plugin, runnable, delay)
         );
     }
 
     @Override
-    public Task runTimer(BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
+    public Task runTimer(BooleanSupplier runnable, long delay, long period) {
         return new BukkitTask(
-                BukkitTask.wrapRunnable(runnable).runTaskTimer(plugin, timerTaskTime.getDelayTicks(), timerTaskTime.getPeriodTicks())
+                BukkitTask.wrapRunnable(runnable).runTaskTimer(plugin, delay, period)
         );
     }
 }

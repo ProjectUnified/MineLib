@@ -3,8 +3,6 @@ package io.github.projectunified.minelib.scheduler.entity;
 import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.task.Task;
-import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
-import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -25,18 +23,18 @@ public interface EntityScheduler extends Scheduler {
 
     Task run(Runnable runnable, Runnable retired);
 
-    Task runLater(Runnable runnable, Runnable retired, TaskTime delay);
+    Task runLater(Runnable runnable, Runnable retired, long delay);
 
-    Task runTimer(BooleanSupplier runnable, Runnable retired, TimerTaskTime timerTaskTime);
+    Task runTimer(BooleanSupplier runnable, Runnable retired, long delay, long period);
 
-    default Task runTimer(Runnable runnable, Runnable retired, TimerTaskTime timerTaskTime) {
+    default Task runTimer(Runnable runnable, Runnable retired, long delay, long period) {
         return runTimer(() -> {
             runnable.run();
             return true;
-        }, retired, timerTaskTime);
+        }, retired, delay, period);
     }
 
-    default Task runLaterWithFinalizer(Runnable runnable, Runnable finalizer, TaskTime delay) {
+    default Task runLaterWithFinalizer(Runnable runnable, Runnable finalizer, long delay) {
         return runLater(() -> {
             try {
                 runnable.run();
@@ -53,15 +51,15 @@ public interface EntityScheduler extends Scheduler {
     }
 
     @Override
-    default Task runLater(Runnable runnable, TaskTime delay) {
+    default Task runLater(Runnable runnable, long delay) {
         return runLater(runnable, () -> {
         }, delay);
     }
 
     @Override
-    default Task runTimer(BooleanSupplier runnable, TimerTaskTime timerTaskTime) {
+    default Task runTimer(BooleanSupplier runnable, long delay, long period) {
         return runTimer(runnable, () -> {
-        }, timerTaskTime);
+        }, delay, period);
     }
 
     class Key {
