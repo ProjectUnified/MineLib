@@ -11,6 +11,7 @@ import java.util.function.BooleanSupplier;
 
 public interface GlobalScheduler {
     ObjectProvider<GlobalScheduler> PROVIDER = new ObjectProvider<>(
+    ObjectProvider<Plugin, GlobalScheduler> PROVIDER = new ObjectProvider<>(
             ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaGlobalScheduler::new),
             ObjectProvider.entry(BukkitGlobalScheduler::new)
     );

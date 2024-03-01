@@ -12,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.function.BooleanSupplier;
 
 public interface RegionScheduler {
-    ObjectProvider<RegionScheduler> PROVIDER = new ObjectProvider<>(
+    ObjectProvider<Plugin, RegionScheduler> PROVIDER = new ObjectProvider<>(
             ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaRegionScheduler::new),
             ObjectProvider.entry(BukkitRegionScheduler::new)
     );

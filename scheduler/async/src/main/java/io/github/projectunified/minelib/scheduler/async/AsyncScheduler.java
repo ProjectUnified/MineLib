@@ -11,6 +11,7 @@ import java.util.function.BooleanSupplier;
 
 public interface AsyncScheduler {
     ObjectProvider<AsyncScheduler> PROVIDER = new ObjectProvider<>(
+    ObjectProvider<Plugin, AsyncScheduler> PROVIDER = new ObjectProvider<>(
             ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaAsyncScheduler::new),
             ObjectProvider.entry(BukkitAsyncScheduler::new)
     );

@@ -5,7 +5,7 @@ import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.plugin.Plugin;
 
 public interface TaskCanceller {
-    ObjectProvider<TaskCanceller> PROVIDER = new ObjectProvider<>(
+    ObjectProvider<Plugin, TaskCanceller> PROVIDER = new ObjectProvider<>(
             ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaTaskCanceller::new),
             ObjectProvider.entry(BukkitTaskCanceller::new)
     );

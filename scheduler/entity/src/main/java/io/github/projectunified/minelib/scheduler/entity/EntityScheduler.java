@@ -12,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.function.BooleanSupplier;
 
 public interface EntityScheduler {
-    ObjectProvider<EntityScheduler> PROVIDER = new ObjectProvider<>(
+    ObjectProvider<Plugin, EntityScheduler> PROVIDER = new ObjectProvider<>(
             ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaEntityScheduler::new),
             ObjectProvider.entry(BukkitEntityScheduler::new)
     );
