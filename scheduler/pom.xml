@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>common</module>
-        <module>bundle</module>
+        <module>bom</module>
         <module>canceller</module>
         <module>global</module>
         <module>async</module>
