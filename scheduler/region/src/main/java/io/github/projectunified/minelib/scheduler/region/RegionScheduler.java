@@ -1,49 +1,47 @@
 package io.github.projectunified.minelib.scheduler.region;
 
 import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
-import io.github.projectunified.minelib.scheduler.common.task.Task;
-import io.github.projectunified.minelib.scheduler.common.time.TaskTime;
-import io.github.projectunified.minelib.scheduler.common.time.TimerTaskTime;
+import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
-import java.util.function.BooleanSupplier;
+import java.util.Objects;
 
-public interface RegionScheduler {
-    ObjectProvider<Plugin, RegionScheduler> PROVIDER = new ObjectProvider<>(
+public interface RegionScheduler extends Scheduler {
+    ObjectProvider<Key, RegionScheduler> PROVIDER = new ObjectProvider<>(
             ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaRegionScheduler::new),
-            ObjectProvider.entry(BukkitRegionScheduler::new)
+            ObjectProvider.entry(key -> new BukkitRegionScheduler(key.plugin))
     );
 
-    static RegionScheduler get(Plugin plugin) {
-        return PROVIDER.get(plugin);
+    static RegionScheduler get(Plugin plugin, World world, int chunkX, int chunkZ) {
+        return PROVIDER.get(new Key(plugin, world, chunkX, chunkZ));
     }
 
-    Task run(World world, int chunkX, int chunkZ, Runnable runnable);
+    class Key {
+        public final Plugin plugin;
+        public final World world;
+        public final int chunkX;
+        public final int chunkZ;
 
-    Task runLater(World world, int chunkX, int chunkZ, Runnable runnable, TaskTime delay);
+        public Key(Plugin plugin, World world, int chunkX, int chunkZ) {
+            this.plugin = plugin;
+            this.world = world;
+            this.chunkX = chunkX;
+            this.chunkZ = chunkZ;
+        }
 
-    Task runTimer(World world, int chunkX, int chunkZ, BooleanSupplier runnable, TimerTaskTime timerTaskTime);
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Key key = (Key) o;
+            return chunkX == key.chunkX && chunkZ == key.chunkZ && Objects.equals(plugin, key.plugin) && Objects.equals(world, key.world);
+        }
 
-    default Task runTimer(World world, int chunkX, int chunkZ, Runnable runnable, TimerTaskTime timerTaskTime) {
-        return runTimer(world, chunkX, chunkZ, () -> {
-            runnable.run();
-            return true;
-        }, timerTaskTime);
-    }
-
-    Task run(Location location, Runnable runnable);
-
-    Task runLater(Location location, Runnable runnable, TaskTime delay);
-
-    Task runTimer(Location location, BooleanSupplier runnable, TimerTaskTime timerTaskTime);
-
-    default Task runTimer(Location location, Runnable runnable, TimerTaskTime timerTaskTime) {
-        return runTimer(location, () -> {
-            runnable.run();
-            return true;
-        }, timerTaskTime);
+        @Override
+        public int hashCode() {
+            return Objects.hash(plugin, world, chunkX, chunkZ);
+        }
     }
 }
