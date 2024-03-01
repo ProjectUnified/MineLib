@@ -1,16 +1,28 @@
 package io.github.projectunified.minelib.scheduler.common.provider;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.AbstractMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 
 public class ObjectProvider<T> {
     private final Function<Plugin, T> function;
-    private final Map<Plugin, T> map = new ConcurrentHashMap<>();
+    private final LoadingCache<Plugin, T> cache = CacheBuilder.newBuilder()
+            .weakKeys()
+            .initialCapacity(20)
+            .build(new CacheLoader<Plugin, T>() {
+                @Override
+                public @NotNull T load(@NotNull Plugin key) {
+                    return function.apply(key);
+                }
+            });
 
     public ObjectProvider(Function<Plugin, T> function) {
         this.function = function;
@@ -39,6 +51,10 @@ public class ObjectProvider<T> {
     }
 
     public T get(Plugin plugin) {
-        return map.computeIfAbsent(plugin, function);
+        try {
+            return cache.get(plugin);
+        } catch (ExecutionException e) {
+            throw new IllegalStateException(e);
+        }
     }
 }
