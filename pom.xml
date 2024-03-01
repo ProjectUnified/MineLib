@@ -12,6 +12,36 @@
         <module>scheduler</module>
     </modules>
 
+    <name>MineLib</name>
+    <description>Unified project for aspects in Minecraft server</description>
+    <url>https://github.com/ProjectUnified/MineLib</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/ProjectUnified/MineLib/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>HSGamer</name>
+            <email>huynhqtienvtag@gmail.com</email>
+            <url>https://github.com/HSGamer</url>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/ProjectUnified/MineLib/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:https://github.com/ProjectUnified/MineLib.git</connection>
+        <developerConnection>scm:git:git@github.com:ProjectUnified/MineLib.git</developerConnection>
+        <url>https://github.com/ProjectUnified/MineLib</url>
+    </scm>
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
