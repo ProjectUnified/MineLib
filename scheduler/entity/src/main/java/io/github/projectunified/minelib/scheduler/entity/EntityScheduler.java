@@ -77,24 +77,6 @@ public interface EntityScheduler extends Scheduler {
         }, retired, delay, period);
     }
 
-    /**
-     * Run a task with a finalizer
-     *
-     * @param runnable  the runnable
-     * @param finalizer the runnable called when the task is finished
-     * @param delay     the delay in ticks
-     * @return the task
-     */
-    default Task runLaterWithFinalizer(Runnable runnable, Runnable finalizer, long delay) {
-        return runLater(() -> {
-            try {
-                runnable.run();
-            } finally {
-                finalizer.run();
-            }
-        }, finalizer, delay);
-    }
-
     @Override
     default Task run(Runnable runnable) {
         return run(runnable, () -> {
