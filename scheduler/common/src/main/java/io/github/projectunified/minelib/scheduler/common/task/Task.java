@@ -2,6 +2,9 @@ package io.github.projectunified.minelib.scheduler.common.task;
 
 import org.bukkit.plugin.Plugin;
 
+/**
+ * A scheduled task
+ */
 public interface Task {
     /**
      * Check if the task is cancelled

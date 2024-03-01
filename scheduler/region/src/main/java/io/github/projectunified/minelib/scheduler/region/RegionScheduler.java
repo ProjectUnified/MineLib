@@ -8,16 +8,31 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
 
+/**
+ * A {@link Scheduler} that schedules tasks for a region
+ */
 public interface RegionScheduler extends Scheduler {
     ObjectProvider<Key, RegionScheduler> PROVIDER = new ObjectProvider<>(
             ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaRegionScheduler::new),
             ObjectProvider.entry(key -> new BukkitRegionScheduler(key.plugin))
     );
 
+    /**
+     * Get the {@link RegionScheduler} for the given {@link Plugin}, {@link World}, and chunk coordinates
+     *
+     * @param plugin the plugin
+     * @param world  the world
+     * @param chunkX the X coordinate of the chunk
+     * @param chunkZ the Z coordinate of the chunk
+     * @return the scheduler
+     */
     static RegionScheduler get(Plugin plugin, World world, int chunkX, int chunkZ) {
         return PROVIDER.get(new Key(plugin, world, chunkX, chunkZ));
     }
 
+    /**
+     * A key for a {@link RegionScheduler}
+     */
     class Key {
         public final Plugin plugin;
         public final World world;

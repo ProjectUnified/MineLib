@@ -7,13 +7,27 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.function.BooleanSupplier;
 
+/**
+ * A wrapped {@link Task} for a Bukkit task
+ */
 public class BukkitTask implements Task {
     private final org.bukkit.scheduler.BukkitTask bukkitTask;
 
+    /**
+     * Create a new instance of {@link BukkitTask}
+     *
+     * @param bukkitTask the Bukkit task to wrap
+     */
     public BukkitTask(org.bukkit.scheduler.BukkitTask bukkitTask) {
         this.bukkitTask = bukkitTask;
     }
 
+    /**
+     * Wrap a {@link Runnable} into a {@link BukkitRunnable}
+     *
+     * @param runnable the runnable to wrap
+     * @return the wrapped runnable
+     */
     public static BukkitRunnable wrapRunnable(BooleanSupplier runnable) {
         return new BukkitRunnable() {
             @Override
@@ -25,6 +39,11 @@ public class BukkitTask implements Task {
         };
     }
 
+    /**
+     * Get the original Bukkit task
+     *
+     * @return The original Bukkit task
+     */
     public org.bukkit.scheduler.BukkitTask getBukkitTask() {
         return bukkitTask;
     }

@@ -2,11 +2,17 @@ package io.github.projectunified.minelib.scheduler.common.util;
 
 import java.util.function.BooleanSupplier;
 
+/**
+ * The platform the server is running on
+ */
 public enum Platform {
     FOLIA("io.papermc.paper.threadedregions.RegionizedServer"),
     PAPER("com.destroystokyo.paper.PaperConfig"),
     BUKKIT(() -> true); // Default platform
 
+    /**
+     * The current platform
+     */
     public static final Platform CURRENT;
 
     static {
@@ -40,6 +46,11 @@ public enum Platform {
         });
     }
 
+    /**
+     * Check if this platform can be applied
+     *
+     * @return true if this platform can be applied
+     */
     public boolean isPlatform() {
         return isPlatform;
     }

@@ -8,16 +8,29 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
 
+/**
+ * A {@link Scheduler} that schedules tasks for a {@link Location}
+ */
 public interface LocationScheduler extends Scheduler {
     ObjectProvider<Key, LocationScheduler> PROVIDER = new ObjectProvider<>(
             ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaLocationScheduler::new),
             ObjectProvider.entry(key -> new BukkitLocationScheduler(key.plugin))
     );
 
+    /**
+     * Get the {@link LocationScheduler} for the given {@link Plugin} and {@link Location}
+     *
+     * @param plugin   the plugin
+     * @param location the location
+     * @return the scheduler
+     */
     static LocationScheduler get(Plugin plugin, Location location) {
         return PROVIDER.get(new Key(plugin, location));
     }
 
+    /**
+     * A key for a {@link LocationScheduler}
+     */
     class Key {
         public final Plugin plugin;
         public final Location location;
