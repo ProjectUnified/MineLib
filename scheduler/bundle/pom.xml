@@ -59,5 +59,10 @@
             <artifactId>minelib-scheduler-region</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.projectunified</groupId>
+            <artifactId>minelib-scheduler-location</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
