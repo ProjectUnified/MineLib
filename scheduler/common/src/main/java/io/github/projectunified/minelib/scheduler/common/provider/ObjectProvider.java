@@ -44,9 +44,9 @@ public class ObjectProvider<K, T> {
         return entry(() -> true, function);
     }
 
-    public T get(K plugin) {
+    public T get(K key) {
         try {
-            return cache.get(plugin);
+            return cache.get(key);
         } catch (ExecutionException e) {
             throw new IllegalStateException(e);
         }
