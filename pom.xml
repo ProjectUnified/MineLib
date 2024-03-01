@@ -108,7 +108,7 @@
                             <publishingServerId>central</publishingServerId>
                             <tokenAuth>true</tokenAuth>
                             <autoPublish>true</autoPublish>
-                            <waitUntil>published</waitUntil>
+                            <waitUntil>uploaded</waitUntil>
                             <deploymentName>MineLib</deploymentName>
                         </configuration>
                     </plugin>
