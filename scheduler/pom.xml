@@ -12,14 +12,14 @@
     <artifactId>minelib-scheduler</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>common</module>
-        <module>bom</module>
-        <module>canceller</module>
-        <module>global</module>
-        <module>async</module>
-        <module>entity</module>
-        <module>region</module>
-        <module>location</module>
+        <module>scheduler-common</module>
+        <module>scheduler-bom</module>
+        <module>scheduler-canceller</module>
+        <module>scheduler-global</module>
+        <module>scheduler-async</module>
+        <module>scheduler-entity</module>
+        <module>scheduler-region</module>
+        <module>scheduler-location</module>
     </modules>
 
     <repositories>
