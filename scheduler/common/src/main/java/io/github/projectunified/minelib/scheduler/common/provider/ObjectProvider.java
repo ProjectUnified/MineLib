@@ -39,6 +39,7 @@ public class ObjectProvider<K, T> {
         for (Map.Entry<BooleanSupplier, Function<K, T>> entry : entries) {
             if (entry.getKey().getAsBoolean()) {
                 function = entry.getValue();
+                break;
             }
         }
         if (function == null) {
