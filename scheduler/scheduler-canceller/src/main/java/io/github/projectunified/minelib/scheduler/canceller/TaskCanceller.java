@@ -1,16 +1,18 @@
 package io.github.projectunified.minelib.scheduler.canceller;
 
-import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
+import com.google.common.cache.LoadingCache;
+import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.plugin.Plugin;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * An interface for cancelling tasks
  */
 public interface TaskCanceller {
-    ObjectProvider<Plugin, TaskCanceller> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaTaskCanceller::new),
-            ObjectProvider.entry(BukkitTaskCanceller::new)
+    LoadingCache<Plugin, TaskCanceller> PROVIDER = Scheduler.createProvider(
+            Platform.FOLIA.isPlatform() ? FoliaTaskCanceller::new : BukkitTaskCanceller::new
     );
 
     /**
@@ -20,7 +22,11 @@ public interface TaskCanceller {
      * @return the {@link TaskCanceller}
      */
     static TaskCanceller get(Plugin plugin) {
-        return PROVIDER.get(plugin);
+        try {
+            return PROVIDER.get(plugin);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

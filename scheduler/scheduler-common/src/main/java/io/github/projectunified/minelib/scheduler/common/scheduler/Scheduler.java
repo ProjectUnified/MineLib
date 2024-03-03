@@ -1,13 +1,29 @@
 package io.github.projectunified.minelib.scheduler.common.scheduler;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.Function;
 
 /**
  * A scheduler that provides a way to run tasks
  */
 public interface Scheduler {
+    /**
+     * Create a provider
+     *
+     * @param function the function
+     * @param <K>      the key type
+     * @param <T>      the scheduler type
+     * @return the provider
+     */
+    static <K, T> LoadingCache<K, T> createProvider(Function<K, T> function) {
+        return CacheBuilder.newBuilder().weakKeys().build(CacheLoader.from(function::apply));
+    }
+
     /**
      * Run a task
      *

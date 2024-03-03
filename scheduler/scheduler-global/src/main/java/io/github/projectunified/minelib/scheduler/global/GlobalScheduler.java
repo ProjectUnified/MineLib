@@ -1,17 +1,18 @@
 package io.github.projectunified.minelib.scheduler.global;
 
-import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
+import com.google.common.cache.LoadingCache;
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.plugin.Plugin;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * A {@link Scheduler} that can run tasks globally
  */
 public interface GlobalScheduler extends Scheduler {
-    ObjectProvider<Plugin, GlobalScheduler> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaGlobalScheduler::new),
-            ObjectProvider.entry(BukkitGlobalScheduler::new)
+    LoadingCache<Plugin, GlobalScheduler> PROVIDER = Scheduler.createProvider(
+            Platform.FOLIA.isPlatform() ? FoliaGlobalScheduler::new : BukkitGlobalScheduler::new
     );
 
     /**
@@ -21,6 +22,10 @@ public interface GlobalScheduler extends Scheduler {
      * @return the scheduler
      */
     static GlobalScheduler get(Plugin plugin) {
-        return PROVIDER.get(plugin);
+        try {
+            return PROVIDER.get(plugin);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

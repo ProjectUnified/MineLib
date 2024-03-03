@@ -1,11 +1,12 @@
 package io.github.projectunified.minelib.scheduler.async;
 
-import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
+import com.google.common.cache.LoadingCache;
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.plugin.Plugin;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BooleanSupplier;
 
@@ -13,9 +14,8 @@ import java.util.function.BooleanSupplier;
  * A {@link Scheduler} that can run tasks asynchronously
  */
 public interface AsyncScheduler extends Scheduler {
-    ObjectProvider<Plugin, AsyncScheduler> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaAsyncScheduler::new),
-            ObjectProvider.entry(BukkitAsyncScheduler::new)
+    LoadingCache<Plugin, AsyncScheduler> PROVIDER = Scheduler.createProvider(
+            Platform.FOLIA.isPlatform() ? FoliaAsyncScheduler::new : BukkitAsyncScheduler::new
     );
 
     /**
@@ -25,7 +25,11 @@ public interface AsyncScheduler extends Scheduler {
      * @return the scheduler
      */
     static AsyncScheduler get(Plugin plugin) {
-        return PROVIDER.get(plugin);
+        try {
+            return PROVIDER.get(plugin);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

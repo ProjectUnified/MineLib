@@ -1,20 +1,20 @@
 package io.github.projectunified.minelib.scheduler.region;
 
-import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
+import com.google.common.cache.LoadingCache;
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A {@link Scheduler} that schedules tasks for a region
  */
 public interface RegionScheduler extends Scheduler {
-    ObjectProvider<Key, RegionScheduler> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaRegionScheduler::new),
-            ObjectProvider.entry(key -> new BukkitRegionScheduler(key.plugin))
+    LoadingCache<Key, RegionScheduler> PROVIDER = Scheduler.createProvider(
+            Platform.FOLIA.isPlatform() ? FoliaRegionScheduler::new : k -> new BukkitRegionScheduler(k.plugin)
     );
 
     /**
@@ -27,7 +27,11 @@ public interface RegionScheduler extends Scheduler {
      * @return the scheduler
      */
     static RegionScheduler get(Plugin plugin, World world, int chunkX, int chunkZ) {
-        return PROVIDER.get(new Key(plugin, world, chunkX, chunkZ));
+        try {
+            return PROVIDER.get(new Key(plugin, world, chunkX, chunkZ));
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

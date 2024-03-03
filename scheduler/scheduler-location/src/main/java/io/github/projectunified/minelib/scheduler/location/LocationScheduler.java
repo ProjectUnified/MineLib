@@ -1,20 +1,20 @@
 package io.github.projectunified.minelib.scheduler.location;
 
-import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
+import com.google.common.cache.LoadingCache;
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A {@link Scheduler} that schedules tasks for a {@link Location}
  */
 public interface LocationScheduler extends Scheduler {
-    ObjectProvider<Key, LocationScheduler> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaLocationScheduler::new),
-            ObjectProvider.entry(key -> new BukkitLocationScheduler(key.plugin))
+    LoadingCache<Key, LocationScheduler> PROVIDER = Scheduler.createProvider(
+            Platform.FOLIA.isPlatform() ? FoliaLocationScheduler::new : k -> new BukkitLocationScheduler(k.plugin)
     );
 
     /**
@@ -25,7 +25,11 @@ public interface LocationScheduler extends Scheduler {
      * @return the scheduler
      */
     static LocationScheduler get(Plugin plugin, Location location) {
-        return PROVIDER.get(new Key(plugin, location));
+        try {
+            return PROVIDER.get(new Key(plugin, location));
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

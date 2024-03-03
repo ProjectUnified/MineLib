@@ -1,6 +1,6 @@
 package io.github.projectunified.minelib.scheduler.entity;
 
-import io.github.projectunified.minelib.scheduler.common.provider.ObjectProvider;
+import com.google.common.cache.LoadingCache;
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
@@ -9,15 +9,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 import java.util.function.BooleanSupplier;
 
 /**
  * A {@link Scheduler} that schedules tasks for an {@link Entity}
  */
 public interface EntityScheduler extends Scheduler {
-    ObjectProvider<Key, EntityScheduler> PROVIDER = new ObjectProvider<>(
-            ObjectProvider.entry(Platform.FOLIA::isPlatform, FoliaEntityScheduler::new),
-            ObjectProvider.entry(BukkitEntityScheduler::new)
+    LoadingCache<Key, EntityScheduler> PROVIDER = Scheduler.createProvider(
+            Platform.FOLIA.isPlatform() ? FoliaEntityScheduler::new : BukkitEntityScheduler::new
     );
 
     /**
@@ -28,7 +28,11 @@ public interface EntityScheduler extends Scheduler {
      * @return the scheduler
      */
     static EntityScheduler get(Plugin plugin, Entity entity) {
-        return PROVIDER.get(new Key(plugin, entity));
+        try {
+            return PROVIDER.get(new Key(plugin, entity));
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
