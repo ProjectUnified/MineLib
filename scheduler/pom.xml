@@ -6,14 +6,13 @@
     <parent>
         <groupId>io.github.projectunified</groupId>
         <artifactId>minelib</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
     </parent>
 
     <artifactId>minelib-scheduler</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>scheduler-common</module>
-        <module>scheduler-bom</module>
         <module>scheduler-canceller</module>
         <module>scheduler-global</module>
         <module>scheduler-async</module>
