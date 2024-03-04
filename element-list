@@ -1,3 +1,8 @@
+io.github.projectunified.minelib.plugin.base
+io.github.projectunified.minelib.plugin.command
+io.github.projectunified.minelib.plugin.listener
+io.github.projectunified.minelib.plugin.permission
+io.github.projectunified.minelib.plugin.postenable
 io.github.projectunified.minelib.scheduler.async
 io.github.projectunified.minelib.scheduler.canceller
 io.github.projectunified.minelib.scheduler.common.scheduler
