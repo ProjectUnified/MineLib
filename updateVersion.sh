@@ -1,6 +1,7 @@
 #!/bin/bash
 UPDATE_DIR="
 scheduler
+plugin
 "
 
 BASE_DIR="$(pwd)"
