@@ -5,15 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.projectunified</groupId>
-        <artifactId>minelib</artifactId>
+        <artifactId>minelib-plugin</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>minelib-plugin</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>plugin-base</module>
-        <module>plugin-listener</module>
-        <module>plugin-postenable</module>
-    </modules>
+    <artifactId>minelib-plugin-listener</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.projectunified</groupId>
+            <artifactId>minelib-plugin-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
