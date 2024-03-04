@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>scheduler</module>
+        <module>plugin</module>
     </modules>
 
     <name>MineLib</name>
