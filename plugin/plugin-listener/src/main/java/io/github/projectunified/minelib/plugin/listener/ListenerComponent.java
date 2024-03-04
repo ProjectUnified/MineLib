@@ -6,7 +6,8 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 /**
- * A component that registers and unregisters itself as a {@link Listener}
+ * A component that registers and unregisters itself as a {@link Listener}.
+ * Plugin listeners should extend this class and register their events.
  */
 public class ListenerComponent implements Loadable, Listener {
     protected final BasePlugin plugin;
