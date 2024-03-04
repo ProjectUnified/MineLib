@@ -3,9 +3,17 @@ package io.github.projectunified.minelib.plugin.postenable;
 import io.github.projectunified.minelib.plugin.base.BasePlugin;
 import io.github.projectunified.minelib.plugin.base.Loadable;
 
+/**
+ * The component for the post-enable phase of the plugin lifecycle
+ */
 public class PostEnableComponent implements Loadable {
     final BasePlugin plugin;
 
+    /**
+     * Creates a new instance
+     *
+     * @param plugin the plugin
+     */
     public PostEnableComponent(BasePlugin plugin) {
         this.plugin = plugin;
     }
