@@ -9,10 +9,7 @@ import org.bukkit.command.SimpleCommandMap;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -87,8 +84,29 @@ public class CommandComponent implements Loadable {
     }
 
     private final BasePlugin plugin;
-    private final Supplier<List<Command>> commandSupplier;
+    private final List<Command> commands;
     private final Map<String, Command> registered = new HashMap<>();
+
+    /**
+     * Create a new instance
+     *
+     * @param plugin   the plugin
+     * @param commands the commands
+     */
+    public CommandComponent(BasePlugin plugin, List<Command> commands) {
+        this.plugin = plugin;
+        this.commands = commands;
+    }
+
+    /**
+     * Create a new instance
+     *
+     * @param plugin   the plugin
+     * @param commands the commands
+     */
+    public CommandComponent(BasePlugin plugin, Command... commands) {
+        this(plugin, Arrays.asList(commands));
+    }
 
     /**
      * Create a new instance
@@ -98,7 +116,7 @@ public class CommandComponent implements Loadable {
      */
     public CommandComponent(BasePlugin plugin, Supplier<List<Command>> commandSupplier) {
         this.plugin = plugin;
-        this.commandSupplier = commandSupplier;
+        this.commands = commandSupplier.get();
     }
 
     /**
@@ -185,7 +203,7 @@ public class CommandComponent implements Loadable {
 
     @Override
     public void enable() {
-        this.commandSupplier.get().forEach(this::register);
+        this.commands.forEach(this::register);
         syncCommand();
     }
 
