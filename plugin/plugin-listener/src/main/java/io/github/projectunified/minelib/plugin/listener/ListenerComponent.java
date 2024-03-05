@@ -1,33 +1,33 @@
 package io.github.projectunified.minelib.plugin.listener;
 
-import io.github.projectunified.minelib.plugin.base.BasePlugin;
 import io.github.projectunified.minelib.plugin.base.Loadable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * A component that registers and unregisters itself as a {@link Listener}.
  * Plugin listeners should extend this class and register their events.
  */
-public class ListenerComponent implements Loadable, Listener {
-    protected final BasePlugin plugin;
-
+public interface ListenerComponent extends Loadable, Listener {
     /**
-     * Create a new instance
+     * Get the plugin that this listener is associated with.
+     * You may override this method to return a different plugin, in case that the listener is not in the same plugin.
      *
-     * @param plugin the plugin
+     * @return the plugin
      */
-    public ListenerComponent(BasePlugin plugin) {
-        this.plugin = plugin;
+    default JavaPlugin getPlugin() {
+        return JavaPlugin.getProvidingPlugin(getClass());
     }
 
     @Override
-    public void enable() {
+    default void enable() {
+        JavaPlugin plugin = getPlugin();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @Override
-    public void disable() {
+    default void disable() {
         HandlerList.unregisterAll(this);
     }
 }
