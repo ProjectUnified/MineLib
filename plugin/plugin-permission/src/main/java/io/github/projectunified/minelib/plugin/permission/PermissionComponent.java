@@ -8,31 +8,37 @@ import org.bukkit.permissions.Permission;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A component that handles the registration and unregistration of {@link Permission}
  */
 public class PermissionComponent implements Loadable {
-    private final BasePlugin plugin;
-    private final Set<Permission> registeredPermissions = new HashSet<>();
+    private final List<Permission> permissions;
 
     /**
      * Create a new instance
      *
+     * @param permissions the permissions
+     */
+    public PermissionComponent(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    /**
+     * Create a new instance that automatically discovers the permissions
+     *
      * @param plugin the plugin
      */
     public PermissionComponent(BasePlugin plugin) {
-        this.plugin = plugin;
+        this.permissions = getPermissions(plugin);
     }
 
-    private List<Permission> getPermissions() {
+    private List<Permission> getPermissions(BasePlugin plugin) {
         List<Permission> permissions = new ArrayList<>();
 
         Class<?>[] classes = {
-                getClass(),
+                this.getClass(),
                 plugin.getClass()
         };
 
@@ -56,16 +62,14 @@ public class PermissionComponent implements Loadable {
 
     @Override
     public void enable() {
-        List<Permission> permissions = getPermissions();
         for (Permission permission : permissions) {
             Bukkit.getPluginManager().addPermission(permission);
-            registeredPermissions.add(permission);
         }
     }
 
     @Override
     public void disable() {
-        for (Permission permission : registeredPermissions) {
+        for (Permission permission : permissions) {
             Bukkit.getPluginManager().removePermission(permission);
         }
     }
