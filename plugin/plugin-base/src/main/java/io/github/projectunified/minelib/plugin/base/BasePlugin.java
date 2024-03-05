@@ -2,11 +2,8 @@ package io.github.projectunified.minelib.plugin.base;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * Base plugin class that provides a simple way to manage components
@@ -18,9 +15,36 @@ public class BasePlugin extends JavaPlugin implements Loadable {
      * Create a new plugin instance
      */
     public BasePlugin() {
-        components = getComponents()
-                .stream()
-                .collect(Collectors.toMap(Object::getClass, o -> o));
+        components = getComponentMap(getComponents());
+    }
+
+    /**
+     * Get a map of components by their class and interfaces
+     *
+     * @param components the components to map
+     * @return the map of components
+     */
+    private static Map<Class<?>, Object> getComponentMap(List<Object> components) {
+        Map<Class<?>, Object> componentMap = new HashMap<>();
+        for (Object component : components) {
+            Set<Class<?>> addedClasses = new HashSet<>();
+            Queue<Class<?>> classQueue = new LinkedList<>();
+            classQueue.add(component.getClass());
+            while (true) {
+                Class<?> clazz = classQueue.poll();
+                if (clazz == null) break;
+                if (!addedClasses.add(clazz)) continue;
+
+                componentMap.put(clazz, component);
+
+                Class<?> superClass = clazz.getSuperclass();
+                if (superClass != null) {
+                    classQueue.add(superClass);
+                }
+                classQueue.addAll(Arrays.asList(clazz.getInterfaces()));
+            }
+        }
+        return componentMap;
     }
 
     /**
