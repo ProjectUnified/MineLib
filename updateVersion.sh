@@ -2,6 +2,7 @@
 UPDATE_DIR="
 scheduler
 plugin
+util
 "
 
 BASE_DIR="$(pwd)"
