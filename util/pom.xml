@@ -14,6 +14,7 @@
     <modules>
         <module>util-subcommand</module>
         <module>util-listener-swapitem</module>
+        <module>util-key</module>
     </modules>
 
     <repositories>
