@@ -13,3 +13,6 @@ io.github.projectunified.minelib.scheduler.entity
 io.github.projectunified.minelib.scheduler.global
 io.github.projectunified.minelib.scheduler.location
 io.github.projectunified.minelib.scheduler.region
+io.github.projectunified.minelib.util.key
+io.github.projectunified.minelib.util.listener.swapitem
+io.github.projectunified.minelib.util.subcommand
