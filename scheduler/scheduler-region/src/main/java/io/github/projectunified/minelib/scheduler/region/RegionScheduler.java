@@ -1,22 +1,16 @@
 package io.github.projectunified.minelib.scheduler.region;
 
-import com.google.common.cache.LoadingCache;
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 /**
  * A {@link Scheduler} that schedules tasks for a region
  */
 public interface RegionScheduler extends Scheduler {
-    LoadingCache<Key, RegionScheduler> PROVIDER = Scheduler.createProvider(
-            Platform.FOLIA.isPlatform() ? FoliaRegionScheduler::new : k -> new BukkitRegionScheduler(k.plugin)
-    );
-
     /**
      * Get the {@link RegionScheduler} for the given {@link Plugin}, {@link World}, and chunk coordinates
      *
@@ -27,11 +21,9 @@ public interface RegionScheduler extends Scheduler {
      * @return the scheduler
      */
     static RegionScheduler get(Plugin plugin, World world, int chunkX, int chunkZ) {
-        try {
-            return PROVIDER.get(new Key(plugin, world, chunkX, chunkZ));
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        return Platform.FOLIA.isPlatform()
+                ? new FoliaRegionScheduler(plugin, world, chunkX, chunkZ)
+                : new BukkitRegionScheduler(plugin);
     }
 
     /**

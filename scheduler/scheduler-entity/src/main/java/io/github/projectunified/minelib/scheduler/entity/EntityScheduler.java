@@ -1,6 +1,5 @@
 package io.github.projectunified.minelib.scheduler.entity;
 
-import com.google.common.cache.LoadingCache;
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
@@ -8,17 +7,31 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 import java.util.function.BooleanSupplier;
 
 /**
  * A {@link Scheduler} that schedules tasks for an {@link Entity}
  */
 public interface EntityScheduler extends Scheduler {
-    LoadingCache<Key, EntityScheduler> PROVIDER = Scheduler.createProvider(
-            Platform.FOLIA.isPlatform() ? FoliaEntityScheduler::new : BukkitEntityScheduler::new
-    );
+    /**
+     * Check if the {@link Entity} is valid.
+     * This checks if the entity is not null and is still valid.
+     * For {@link Player} entities, this also checks if the player is online.
+     *
+     * @param entity the entity
+     * @return {@code true} if the entity is valid
+     */
+    static boolean isEntityValid(Entity entity) {
+        if (entity == null) {
+            return false;
+        }
+
+        if (entity instanceof Player) {
+            return ((Player) entity).isOnline();
+        }
+
+        return entity.isValid();
+    }
 
     /**
      * Get the {@link EntityScheduler} for the given {@link Plugin} and {@link Entity}
@@ -28,11 +41,9 @@ public interface EntityScheduler extends Scheduler {
      * @return the scheduler
      */
     static EntityScheduler get(Plugin plugin, Entity entity) {
-        try {
-            return PROVIDER.get(new Key(plugin, entity));
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        return Platform.FOLIA.isPlatform()
+                ? new FoliaEntityScheduler(plugin, entity)
+                : new BukkitEntityScheduler(plugin, entity);
     }
 
     /**
@@ -97,48 +108,5 @@ public interface EntityScheduler extends Scheduler {
     default Task runTimer(BooleanSupplier runnable, long delay, long period) {
         return runTimer(runnable, () -> {
         }, delay, period);
-    }
-
-    /**
-     * A key for the {@link EntityScheduler}
-     */
-    class Key {
-        public final Plugin plugin;
-        public final Entity entity;
-
-        public Key(Plugin plugin, Entity entity) {
-            this.plugin = plugin;
-            this.entity = entity;
-        }
-
-        /**
-         * Check if the entity is valid
-         *
-         * @return true if the entity is valid
-         */
-        public boolean isEntityValid() {
-            if (entity == null) {
-                return false;
-            }
-
-            if (entity instanceof Player) {
-                return ((Player) entity).isOnline();
-            }
-
-            return entity.isValid();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Key key = (Key) o;
-            return Objects.equals(plugin, key.plugin) && Objects.equals(entity, key.entity);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(plugin, entity);
-        }
     }
 }
