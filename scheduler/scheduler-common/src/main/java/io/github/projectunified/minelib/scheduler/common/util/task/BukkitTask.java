@@ -54,8 +54,21 @@ public class BukkitTask implements Task {
             return bukkitTask.isCancelled();
         } catch (Throwable throwable) {
             int taskId = bukkitTask.getTaskId();
-            return !(Bukkit.getScheduler().isQueued(taskId) || Bukkit.getScheduler().isCurrentlyRunning(taskId));
+            return !Bukkit.getScheduler().isQueued(taskId) && !Bukkit.getScheduler().isCurrentlyRunning(taskId);
         }
+    }
+
+    @Override
+    public boolean isDone() {
+        try {
+            if (bukkitTask.isCancelled()) {
+                return false;
+            }
+        } catch (Throwable ignored) {
+            // IGNORED
+        }
+        int taskId = bukkitTask.getTaskId();
+        return !Bukkit.getScheduler().isQueued(taskId) && !Bukkit.getScheduler().isCurrentlyRunning(taskId);
     }
 
     @Override

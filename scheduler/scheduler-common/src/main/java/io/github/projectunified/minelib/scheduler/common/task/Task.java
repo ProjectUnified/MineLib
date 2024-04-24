@@ -14,6 +14,13 @@ public interface Task {
     boolean isCancelled();
 
     /**
+     * Check if the task is done
+     *
+     * @return true if the task is done
+     */
+    boolean isDone();
+
+    /**
      * Cancel the task
      */
     void cancel();

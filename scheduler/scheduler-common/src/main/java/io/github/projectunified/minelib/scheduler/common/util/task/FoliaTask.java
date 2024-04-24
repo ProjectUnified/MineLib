@@ -71,6 +71,11 @@ public class FoliaTask implements Task {
     }
 
     @Override
+    public boolean isDone() {
+        return scheduledTask.getExecutionState() == ScheduledTask.ExecutionState.FINISHED;
+    }
+
+    @Override
     public void cancel() {
         scheduledTask.cancel();
     }
