@@ -56,14 +56,31 @@ public class BasePlugin extends JavaPlugin implements Loadable {
      *
      * @param type     the class of the component
      * @param consumer the consumer to call
+     * @param reverse  whether to iterate in reverse order
      * @param <T>      the type of the component
      */
-    public final <T> void call(Class<T> type, Consumer<T> consumer) {
-        for (Object component : components) {
+    public final <T> void call(Class<T> type, Consumer<T> consumer, boolean reverse) {
+        int size = components.size();
+        int index = reverse ? size - 1 : 0;
+        int step = reverse ? -1 : 1;
+        while (index >= 0 && index < size) {
+            Object component = components.get(index);
             if (type.isInstance(component)) {
                 consumer.accept(type.cast(component));
             }
+            index += step;
         }
+    }
+
+    /**
+     * Call a consumer for each component of a given type.
+     *
+     * @param type     the class of the component
+     * @param consumer the consumer to call
+     * @param <T>      the type of the component
+     */
+    public final <T> void call(Class<T> type, Consumer<T> consumer) {
+        call(type, consumer, false);
     }
 
     @Override
@@ -80,7 +97,7 @@ public class BasePlugin extends JavaPlugin implements Loadable {
 
     @Override
     public final void onDisable() {
-        this.call(Loadable.class, Loadable::disable);
+        this.call(Loadable.class, Loadable::disable, true);
         this.disable();
     }
 }
