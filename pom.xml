@@ -124,7 +124,6 @@
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
-                            <tokenAuth>true</tokenAuth>
                             <autoPublish>true</autoPublish>
                             <deploymentName>MineLib</deploymentName>
                         </configuration>
