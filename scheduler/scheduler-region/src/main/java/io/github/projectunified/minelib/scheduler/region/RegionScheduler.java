@@ -2,6 +2,7 @@ package io.github.projectunified.minelib.scheduler.region;
 
 import io.github.projectunified.minelib.scheduler.common.scheduler.Scheduler;
 import io.github.projectunified.minelib.scheduler.common.util.Platform;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
@@ -24,6 +25,17 @@ public interface RegionScheduler extends Scheduler {
         return Platform.FOLIA.isPlatform()
                 ? new FoliaRegionScheduler(plugin, world, chunkX, chunkZ)
                 : new BukkitRegionScheduler(plugin);
+    }
+
+    /**
+     * Get the {@link RegionScheduler} for the given {@link Plugin} and {@link Chunk}
+     *
+     * @param plugin the plugin
+     * @param chunk  the chunk
+     * @return the scheduler
+     */
+    static RegionScheduler get(Plugin plugin, Chunk chunk) {
+        return get(plugin, chunk.getWorld(), chunk.getX(), chunk.getZ());
     }
 
     /**
