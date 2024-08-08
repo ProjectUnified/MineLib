@@ -10,25 +10,6 @@ public enum Platform {
     PAPER("com.destroystokyo.paper.PaperConfig"),
     BUKKIT(() -> true); // Default platform
 
-    /**
-     * The current platform
-     */
-    public static final Platform CURRENT;
-
-    static {
-        Platform current = null;
-        for (Platform platform : values()) {
-            if (platform.isPlatform) {
-                current = platform;
-                break;
-            }
-        }
-        if (current == null) {
-            throw new IllegalStateException("Unknown platform");
-        }
-        CURRENT = current;
-    }
-
     private final boolean isPlatform;
 
     Platform(BooleanSupplier isPlatformCheck) {
