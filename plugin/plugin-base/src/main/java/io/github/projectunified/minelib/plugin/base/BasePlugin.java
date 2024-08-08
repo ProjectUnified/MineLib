@@ -61,8 +61,16 @@ public class BasePlugin extends JavaPlugin implements Loadable {
      */
     public final <T> void call(Class<T> type, Consumer<T> consumer, boolean reverse) {
         int size = components.size();
-        int index = reverse ? size - 1 : 0;
-        int step = reverse ? -1 : 1;
+
+        int index, step;
+        if (reverse) {
+            index = size - 1;
+            step = -1;
+        } else {
+            index = 0;
+            step = 1;
+        }
+
         while (index >= 0 && index < size) {
             Object component = components.get(index);
             if (type.isInstance(component)) {
