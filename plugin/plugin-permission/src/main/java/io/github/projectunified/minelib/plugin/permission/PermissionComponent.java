@@ -63,10 +63,9 @@ public class PermissionComponent implements Loadable {
      * @param permission the permission
      */
     public void addPermission(Permission permission) {
-        if (enabled) {
-            Bukkit.getPluginManager().addPermission(permission);
-        }
+        if (permissions.contains(permission)) return;
         permissions.add(permission);
+        if (enabled) Bukkit.getPluginManager().addPermission(permission);
     }
 
     /**
@@ -75,10 +74,9 @@ public class PermissionComponent implements Loadable {
      * @param permission the permission
      */
     public void removePermission(Permission permission) {
-        if (enabled) {
+        if (permissions.remove(permission) && enabled) {
             Bukkit.getPluginManager().removePermission(permission);
         }
-        permissions.remove(permission);
     }
 
     @Override
