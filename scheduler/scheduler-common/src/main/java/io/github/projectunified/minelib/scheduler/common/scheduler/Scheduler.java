@@ -2,6 +2,7 @@ package io.github.projectunified.minelib.scheduler.common.scheduler;
 
 import io.github.projectunified.minelib.scheduler.common.task.Task;
 
+import java.util.concurrent.Executor;
 import java.util.function.BooleanSupplier;
 
 /**
@@ -48,5 +49,14 @@ public interface Scheduler {
             runnable.run();
             return true;
         }, delay, period);
+    }
+
+    /**
+     * Get the executor from this scheduler
+     *
+     * @return the executor
+     */
+    default Executor getExecutor() {
+        return this::run;
     }
 }
