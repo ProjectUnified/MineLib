@@ -6,7 +6,7 @@
 
     <groupId>io.github.projectunified</groupId>
     <artifactId>minelib</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>scheduler</module>
