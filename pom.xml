@@ -85,6 +85,10 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <source>${java.version}</source>
+                    <outputDirectory>${project.build.directory}/reports</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
