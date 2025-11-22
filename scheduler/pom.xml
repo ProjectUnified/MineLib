@@ -33,7 +33,7 @@
         <dependency>
             <groupId>dev.folia</groupId>
             <artifactId>folia-api</artifactId>
-            <version>1.20.6-R0.1-20240829.045608-5</version>
+            <version>1.20.4-R0.1-20240510.223426-10</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
