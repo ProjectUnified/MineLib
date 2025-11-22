@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-scheduler</artifactId>
+    <name>MineLib Scheduler</name>
     <packaging>pom</packaging>
     <modules>
         <module>scheduler-common</module>

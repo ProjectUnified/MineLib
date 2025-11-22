@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-scheduler-async</artifactId>
+    <name>MineLib Scheduler Async</name>
 
     <dependencies>
         <dependency>

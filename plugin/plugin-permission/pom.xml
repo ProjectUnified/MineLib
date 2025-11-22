@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-plugin-permission</artifactId>
+    <name>MineLib Plugin Permission</name>
 
     <dependencies>
         <dependency>

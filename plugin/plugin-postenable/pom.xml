@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-plugin-postenable</artifactId>
+    <name>MineLib Plugin Postenable</name>
 
     <repositories>
         <repository>

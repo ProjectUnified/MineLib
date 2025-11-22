@@ -10,4 +10,5 @@
     </parent>
 
     <artifactId>minelib-scheduler-common</artifactId>
+    <name>MineLib Scheduler Common</name>
 </project>

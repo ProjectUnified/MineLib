@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-scheduler-canceller</artifactId>
+    <name>MineLib Scheduler Canceller</name>
 
     <dependencies>
         <dependency>

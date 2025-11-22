@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-scheduler-entity</artifactId>
+    <name>MineLib Scheduler Entity</name>
 
     <dependencies>
         <dependency>

@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-scheduler-global</artifactId>
+    <name>MineLib Scheduler Global</name>
 
     <dependencies>
         <dependency>

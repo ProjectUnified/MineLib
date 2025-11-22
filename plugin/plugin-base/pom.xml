@@ -10,4 +10,5 @@
     </parent>
 
     <artifactId>minelib-plugin-base</artifactId>
+    <name>MineLib Plugin Base</name>
 </project>

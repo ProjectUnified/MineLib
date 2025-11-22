@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-plugin-listener</artifactId>
+    <name>MineLib Plugin Listener</name>
 
     <dependencies>
         <dependency>

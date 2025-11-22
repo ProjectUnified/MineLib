@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-scheduler-region</artifactId>
+    <name>MineLib Scheduler Region</name>
 
     <dependencies>
         <dependency>

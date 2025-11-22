@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>minelib-plugin</artifactId>
+    <name>MineLib Plugin</name>
     <packaging>pom</packaging>
     <modules>
         <module>plugin-base</module>
